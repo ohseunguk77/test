@@ -1,0 +1,57 @@
+import random
+import time
+
+def play_game():
+    print("="*30)
+    print("1: 구구단 (2~9단)")
+    print("2: 두 자리 수 곱셈 (10~99)")
+    print("3~9: n자리 수 덧셈 (예: 3 입력 시 3자리 덧셈)")
+    print("0: 종료")
+    print("="*30)
+    
+    try:
+        choice = int(input("선택: "))
+    except:
+        print("숫자만 입력하셈.")
+        return True
+
+    if choice == 0:
+        return False
+
+    # (1) & (3) 조건: 3~9자리 덧셈 처리
+    if 3 <= choice <= 9:
+        start, end = 10**(choice-1), (10**choice)-1
+        n1, n2 = random.randint(start, end), random.randint(start, end)
+        quest, correct = f"{n1} + {n2}", n1 + n2
+    
+    # (2) 조건: 두 자리 수 곱셈 처리
+    elif choice == 2:
+        n1, n2 = random.randint(10, 99), random.randint(10, 99)
+        quest, correct = f"{n1} * {n2}", n1 * n2
+        
+    # (3) 조건: 1번 선택 시 기본 구구단
+    elif choice == 1:
+        n1, n2 = random.randint(2, 9), random.randint(1, 9)
+        quest, correct = f"{n1} * {n2}", n1 * n2
+        
+    else:
+        print("잘못된 번호임.")
+        return True
+
+    # 공통 실행부 (문제 출제 및 채점)
+    print(f"\n문제: {quest} = ?")
+    start_time = time.time()
+    try:
+        user_ans = int(input("정답: "))
+        if user_ans == correct:
+            print(f"정답임! (소요시간: {time.time()-start_time:.2f}초)")
+        else:
+            print(f"틀렸음. 정답은 {correct}임.")
+    except:
+        print("숫자로 답하셈.")
+        
+    return True
+
+if __name__ == "__main__":
+    while play_game():
+        pass
